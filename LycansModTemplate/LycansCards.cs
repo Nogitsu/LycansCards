@@ -1,4 +1,6 @@
 ﻿using BepInEx;
+using BepInEx.Configuration;
+using System.IO;
 using UnityEngine;
 
 namespace LycansModTemplate
@@ -14,12 +16,37 @@ namespace LycansModTemplate
 
         private void Awake()
         {
+            CountMods();
             Log.Init(Logger);
         }
 
         private void Update()
         {
             
+        }
+
+        private void CountMods()
+        {
+            string gameVersion = Application.version.ToString();
+            int modsCount = 0;
+
+
+
+            if (Directory.Exists(Paths.PluginPath))
+            {
+                modsCount = Directory.GetDirectories(Paths.PluginPath).Length; 
+            }
+
+            GameObject versionObj = GameObject.Find("Version");
+            if (versionObj != null)
+            {
+                TMPro.TextMeshProUGUI tmPro= versionObj.GetComponent<TMPro.TextMeshProUGUI>();
+                if (tmPro != null)
+                {
+                    string mods = modsCount > 1 ? "mods" : "mod";
+                    tmPro.SetText("Modded version " + Application.version.ToString() + " (" + modsCount + " " + mods + " loaded)");
+                }
+            }
         }
     }
 }
