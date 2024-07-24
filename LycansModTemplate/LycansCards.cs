@@ -42,14 +42,12 @@ namespace LycansModTemplate
             string gameVersion = Application.version.ToString();
             int modsCount = 0;
 
-
-
             if (Directory.Exists(Paths.PluginPath))
             {
                 modsCount = Directory.GetDirectories(Paths.PluginPath).Length;
             }
 
-             GameObject versionObj = GameObject.Find("/GameUI/Canvas/MainMenu/LayoutGroup/Footer/Version");
+            GameObject versionObj = GameObject.Find("/GameUI/Canvas/MainMenu/LayoutGroup/Footer/Version");
             if (versionObj != null)
             {
                 Log.Info(PREFIX + "Found version object");
@@ -60,7 +58,10 @@ namespace LycansModTemplate
                     tmPro.SetText("Modded version " + Application.version.ToString() + " (" + modsCount + " " + mods + " loaded)");
                 }
             }
+
             return modsCount;
         }
+
+        On.GameObject.
     }
 }
