@@ -1,7 +1,8 @@
 ﻿using BepInEx;
-using BepInEx.Configuration;
 using System.IO;
 using UnityEngine;
+using System.Collections;
+using TMPro;
 
 namespace LycansModTemplate
 {
@@ -14,19 +15,30 @@ namespace LycansModTemplate
         public const string PLUGIN_NAME = "Lycans Cards";
         public const string PLUGIN_VERSION = "1.0.0";
 
+        private const string PREFIX = "Lycans Cards > ";
+
         private void Awake()
         {
-            CountMods();
             Log.Init(Logger);
+
+            Log.Info(PREFIX + "Démarrage");
+            int modsCount = CountMods();
+            Log.Info(PREFIX + "Found " + modsCount + " mods");
         }
 
         private void Update()
         {
-            
         }
 
-        private void CountMods()
+        // private void Start()
+        // {
+        //     Log.Info(PREFIX + "Start");
+        //     CountMods();
+        // }
+
+        private int CountMods()
         {
+            Log.Info(PREFIX + "Counting mods...");
             string gameVersion = Application.version.ToString();
             int modsCount = 0;
 
@@ -34,19 +46,21 @@ namespace LycansModTemplate
 
             if (Directory.Exists(Paths.PluginPath))
             {
-                modsCount = Directory.GetDirectories(Paths.PluginPath).Length; 
+                modsCount = Directory.GetDirectories(Paths.PluginPath).Length;
             }
 
-            GameObject versionObj = GameObject.Find("Version");
+             GameObject versionObj = GameObject.Find("/GameUI/Canvas/MainMenu/LayoutGroup/Footer/Version");
             if (versionObj != null)
             {
-                TMPro.TextMeshProUGUI tmPro= versionObj.GetComponent<TMPro.TextMeshProUGUI>();
+                Log.Info(PREFIX + "Found version object");
+                TextMeshProUGUI tmPro= versionObj.GetComponent<TextMeshProUGUI>();
                 if (tmPro != null)
                 {
                     string mods = modsCount > 1 ? "mods" : "mod";
                     tmPro.SetText("Modded version " + Application.version.ToString() + " (" + modsCount + " " + mods + " loaded)");
                 }
             }
+            return modsCount;
         }
     }
 }
