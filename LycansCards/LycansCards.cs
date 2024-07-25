@@ -6,7 +6,7 @@ using UnityEngine;
 using System.Collections;
 using TMPro;
 
-namespace LycansModTemplate
+namespace LycansCards
 {
     [BepInPlugin(PLUGIN_GUID, PLUGIN_NAME, PLUGIN_VERSION)]
     [BepInProcess("Lycans.exe")]
@@ -18,56 +18,33 @@ namespace LycansModTemplate
         public const string PLUGIN_NAME = "Lycans Cards";
         public const string PLUGIN_VERSION = "1.0.0";
 
-        private const string PREFIX = "Lycans Cards > ";
-        private static int modsCount = 0;
 
         private void Awake()
         {
             Log.Init(Logger);
+            Log.Info("Démarrage");
 
-            Log.Info(PREFIX + "Démarrage");
-            string gameVersion = Application.version.ToString();
-            Log.Info(PREFIX + "Awake Game version: " + gameVersion);
-
-            On.GameUI.ShowMainMenu += OnShowMainMenu;
-        }
-
-        private void OnShowMainMenu(On.GameUI.orig_ShowMainMenu orig, GameUI self, bool active)
-        {
-            int modsCount = CountMods();
-
-            GameObject versionObj = GameObject.Find("/GameUI/Canvas/MainMenu/LayoutGroup/Footer/Version");
-            if (versionObj != null)
-            {
-                TextMeshProUGUI tmPro = versionObj.GetComponent<TextMeshProUGUI>();
-                if (tmPro != null)
-                {
-                    string mods = modsCount > 1 ? "mods" : "mod";
-                    tmPro.SetText("Modded version " + Application.version.ToString() + " (" + modsCount + " " + mods + " loaded)");
-                }
-            }
-
-            orig(self, active);
+            Patches.GameUI.Patch();
         }
 
         private void Update()
         {
-            Log.Debug(PREFIX + "Update");
+            Log.Debug("Update");
         }
 
-        private static int CountMods()
+        public static int CountMods()
         {
-            Log.Info(PREFIX + "Counting mods...");
-            string gameVersion = Application.version.ToString();
-            Log.Info(PREFIX + "CountMods Game version: " + gameVersion);
+            Log.Info("Counting mods...");
 
             if (Directory.Exists(Paths.PluginPath))
             {
-                modsCount = Directory.GetDirectories(Paths.PluginPath).Length;
-                Log.Info(PREFIX + "Found " + modsCount + " mods");
+                int modsCount = Directory.GetDirectories(Paths.PluginPath).Length;
+                Log.Info("Found " + modsCount + " mods");
+
+                return modsCount;
             }
 
-            return modsCount;
+            return 0;
         }
     }
 }

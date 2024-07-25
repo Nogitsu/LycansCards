@@ -1,6 +1,6 @@
 ﻿using BepInEx.Logging;
 
-namespace LycansModTemplate
+namespace LycansCards
 {
     internal static class Log
     {
