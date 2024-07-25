@@ -13,8 +13,6 @@ namespace LycansModTemplate
     public class LycansCards : BaseUnityPlugin
     {
 
-        private static System.Timers.Timer timer;
-
         public const string PLUGIN_GUID = $"nm-qm.lycans-cards";
         public const string PLUGIN_AUTHOR = "NM & QM";
         public const string PLUGIN_NAME = "Lycans Cards";
@@ -32,8 +30,6 @@ namespace LycansModTemplate
             Log.Info(PREFIX + "Awake Game version: " + gameVersion);
 
             On.GameUI.ShowMainMenu += OnShowMainMenu;
-
-            // setLateInit();
         }
 
         private void OnShowMainMenu(On.GameUI.orig_ShowMainMenu orig, GameUI self, bool active)
@@ -52,23 +48,6 @@ namespace LycansModTemplate
             }
 
             orig(self, active);
-        }
-
-        private static void setLateInit()
-        {
-            Log.Info(PREFIX + "setLateInit");
-            timer = new System.Timers.Timer(10000); 
-            timer.Elapsed += Timer_Elapsed;
-            timer.AutoReset = false;
-            timer.Enabled = true;
-            Log.Info(PREFIX + "setLateInit done");
-        }
-
-        private static void Timer_Elapsed(object sender, ElapsedEventArgs e)
-        {
-            Log.Info(PREFIX + "Timer_Elapsed");
-            CountMods();
-            Log.Info(PREFIX + "Timer_Elapsed done");
         }
 
         private void Update()
