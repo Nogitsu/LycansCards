@@ -14,7 +14,7 @@ namespace LycansCards.Utilities
         public Texture2D LoadTexture(string texturePath)
         {
             Texture2D texture = new Texture2D(1, 1);
-            ImageConversion.LoadImage(texture, File.ReadAllBytes(assetsPath + texturePath));
+            ImageConversion.LoadImage(texture, File.ReadAllBytes(assetsPath + "/Textures/" + texturePath));
             return texture;
         }
     }
