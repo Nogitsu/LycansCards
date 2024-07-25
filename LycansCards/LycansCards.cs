@@ -11,6 +11,7 @@ namespace LycansCards
         public const string PLUGIN_GUID = $"nm-qm.lycans-cards";
         public const string PLUGIN_AUTHOR = "NM & QM";
         public const string PLUGIN_NAME = "Lycans Cards";
+        public const string PLUGIN_FOLDER = "LycansCards";
         public const string PLUGIN_VERSION = "1.0.0";
 
 
