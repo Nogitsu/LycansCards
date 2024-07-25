@@ -24,23 +24,28 @@ namespace LycansModTemplate
             Log.Info(PREFIX + "Démarrage");
             int modsCount = CountMods();
             Log.Info(PREFIX + "Found " + modsCount + " mods");
+            string gameVersion = Application.version.ToString();
+            Log.Info(PREFIX + "Awake Game version: " + gameVersion);
         }
 
         private void Update()
         {
+            Log.Info(PREFIX + "Update");
         }
 
-        // private void Start()
-        // {
-        //     Log.Info(PREFIX + "Start");
-        //     CountMods();
-        // }
+        private void Start()
+        {
+            Log.Info(PREFIX + "Start");
+        }
 
         private int CountMods()
         {
             Log.Info(PREFIX + "Counting mods...");
             string gameVersion = Application.version.ToString();
+            Log.Info(PREFIX + "CountMods Game version: " + gameVersion);
             int modsCount = 0;
+
+
 
             if (Directory.Exists(Paths.PluginPath))
             {
@@ -51,17 +56,14 @@ namespace LycansModTemplate
             if (versionObj != null)
             {
                 Log.Info(PREFIX + "Found version object");
-                TextMeshProUGUI tmPro= versionObj.GetComponent<TextMeshProUGUI>();
+                TextMeshProUGUI tmPro = versionObj.GetComponent<TextMeshProUGUI>();
                 if (tmPro != null)
                 {
                     string mods = modsCount > 1 ? "mods" : "mod";
                     tmPro.SetText("Modded version " + Application.version.ToString() + " (" + modsCount + " " + mods + " loaded)");
                 }
             }
-
             return modsCount;
         }
-
-        On.GameObject.
     }
 }
