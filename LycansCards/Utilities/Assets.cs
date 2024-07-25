@@ -11,7 +11,7 @@ namespace LycansCards.Utilities
     public class Assets
     {
         static private readonly string assetsPath = Paths.PluginPath + "/" + LycansCards.PLUGIN_FOLDER + "/Assets/";
-        public Texture2D LoadTexture(string texturePath)
+        static public Texture2D LoadTexture(string texturePath)
         {
             Texture2D texture = new Texture2D(1, 1);
             ImageConversion.LoadImage(texture, File.ReadAllBytes(assetsPath + "/Textures/" + texturePath));
