@@ -31,7 +31,27 @@ namespace LycansModTemplate
             string gameVersion = Application.version.ToString();
             Log.Info(PREFIX + "Awake Game version: " + gameVersion);
 
-            setLateInit();
+            On.GameUI.ShowMainMenu += OnShowMainMenu;
+
+            // setLateInit();
+        }
+
+        private void OnShowMainMenu(On.GameUI.orig_ShowMainMenu orig, GameUI self, bool active)
+        {
+            int modsCount = CountMods();
+
+            GameObject versionObj = GameObject.Find("/GameUI/Canvas/MainMenu/LayoutGroup/Footer/Version");
+            if (versionObj != null)
+            {
+                TextMeshProUGUI tmPro = versionObj.GetComponent<TextMeshProUGUI>();
+                if (tmPro != null)
+                {
+                    string mods = modsCount > 1 ? "mods" : "mod";
+                    tmPro.SetText("Modded version " + Application.version.ToString() + " (" + modsCount + " " + mods + " loaded)");
+                }
+            }
+
+            orig(self, active);
         }
 
         private static void setLateInit()
@@ -56,10 +76,6 @@ namespace LycansModTemplate
             Log.Debug(PREFIX + "Update");
         }
 
-        private void Start()
-        {
-            Log.Info(PREFIX + "Start");
-        }
         private static int CountMods()
         {
             Log.Info(PREFIX + "Counting mods...");
@@ -72,17 +88,6 @@ namespace LycansModTemplate
                 Log.Info(PREFIX + "Found " + modsCount + " mods");
             }
 
-            GameObject versionObj = GameObject.Find("/GameUI/Canvas/MainMenu/LayoutGroup/Footer/Version");
-            if (versionObj != null)
-            {
-                Log.Info(PREFIX + "Found version object");
-                TextMeshProUGUI tmPro = versionObj.GetComponent<TextMeshProUGUI>();
-                if (tmPro != null)
-                {
-                    string mods = modsCount > 1 ? "mods" : "mod";
-                    tmPro.SetText("Modded version " + Application.version.ToString() + " (" + modsCount + " " + mods + " loaded)");
-                }
-            }
             return modsCount;
         }
     }
